@@ -1,11 +1,12 @@
-package Company;
+package Employee;
 
 //abstract ya3ni mynf3sh a3ml mno OBJECT 
-import java.util.ArrayList;
+import Company.Task;
+import static Company.MainClass.allEmployees;
 
-enum Gender {
-    Male, Female
-};
+import static Company.MainClass.input;
+import Company.Project;
+import java.util.ArrayList;
 
 public abstract class Employee {
 
@@ -18,6 +19,7 @@ public abstract class Employee {
     protected static double deductionPerDay = 85.5;
     protected static double deductionPerHour = 15.5;
     protected double actualSalary;
+
     protected static ArrayList<Project> worksOn;
 
     public Employee() {
@@ -105,9 +107,48 @@ public abstract class Employee {
         }
     }
 
-    abstract boolean runTask(Task t);
-    
-    double calculateActualSalary() {
+    private static void addEmployee() {
+        System.out.println("Enter employee name : ");
+        String name = input.nextLine();
+        System.out.println("Enter employee ID : ");
+        String id = input.nextLine();
+        System.out.println("Enter employee Gender :");
+        char gender = input.next().charAt(0);
+        Employee emp = null;
+        System.out.println("1-Developer\n2-Accountant");
+        int option = input.nextInt();
+        if (option == 1) {
+            input.nextLine();
+            System.out.println("what is the framework?");
+            String frameWork = input.nextLine();
+            emp = new Developer(name, id, gender, frameWork);
+        } else if (option == 2) {
+            input.nextLine();
+            emp = new Accountant(name, id, gender);
+
+        }
+        allEmployees.add(emp);
+    }
+
+    public static Employee searchEmp_By_ID(String id) {
+        for (int i = 0; i < allEmployees.size(); i++) {
+            if (allEmployees.get(i).getNationalId().equals(id)) {
+                return allEmployees.get(i);
+            }
+        }
+        return null;
+    }
+
+    public static Employee searchEmp_By_Name(String name) {
+        for (int i = 0; i < allEmployees.size(); i++) {
+            if (allEmployees.get(i).getName().equals(name)) {
+                return allEmployees.get(i);
+            }
+        }
+        return null;
+    }
+
+    public double calculateActualSalary() {
         actualSalary = salary;
         if (availableVacations < 0) {
             actualSalary += (deductionPerDay * availableVacations);
@@ -117,6 +158,24 @@ public abstract class Employee {
         }
         return actualSalary;
     }
+
+    public static void printPayRoll_To_AllEmployees(ArrayList<Employee> allEmps) {
+        for (int i = 0; i < allEmps.size(); i++) {
+            System.out.println(
+                    allEmps.get(i).getName() + " : "
+                    + allEmps.get(i).calculateActualSalary());
+        }
+    }
+
+    public static double PayRoll_To_AllEmployees(ArrayList<Employee> allEmps) {
+        double sum = 0;
+        for (int i = 0; i < allEmps.size(); i++) {
+            sum += allEmps.get(i).calculateActualSalary();
+        }
+        return sum;
+    }
+
+    abstract boolean runTask(Task t);
 
     public void freeAll() {
         availableVacations = 15;

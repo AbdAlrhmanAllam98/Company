@@ -1,4 +1,9 @@
-package Company;
+package Employee;
+
+import Company.Task;
+import Company.Task;
+import java.util.ArrayList;
+
 public class Developer extends Employee{
     String frameWork;
     static double overTime=2000;
@@ -26,6 +31,22 @@ public class Developer extends Employee{
     
     public void getStatus(){
         System.out.println("i'm in meeting .");
+    }
+        static void printPayRoll_To_Developers(ArrayList<Employee> allEmps) {
+        for (int i = 0; i < allEmps.size(); i++) {
+            if (allEmps.get(i) instanceof Developer) {
+                System.out.println(allEmps.get(i).getName() + " : " + allEmps.get(i).calculateActualSalary());
+            }
+        }
+    }
+    static double PayRoll_To_Developers(ArrayList<Employee> allEmps) {
+        double sum = 0;
+        for (int i = 0; i < allEmps.size(); i++) {
+            if (allEmps.get(i) instanceof Developer) {
+                sum += allEmps.get(i).calculateActualSalary();
+            }
+        }
+        return sum;
     }
 
     @Override
