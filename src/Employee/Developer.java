@@ -1,7 +1,7 @@
 package Employee;
 
-import Company.Task;
-import Company.Task;
+import Project.Task;
+import Project.Task;
 import java.util.ArrayList;
 
 public class Developer extends Employee{

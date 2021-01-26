@@ -1,8 +1,9 @@
-package Company;
+package Department;
 
+import Project.Project;
 import Employee.Employee;
-import static Company.MainClass.allDepartments;
-import static Company.MainClass.input;
+import static Company.HR.allDepartments;
+import static Company.HR.input;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class Department {
         this.projects = projects;
     }
 
-    void addProjectToDept(Project p) {
+    public void addProjectToDept(Project p) {
         projects.add(p);
     }
 

@@ -1,12 +1,14 @@
 package Company;
 
+import Project.Project;
+import Department.Department;
 import Employee.Accountant;
 import Employee.Developer;
 import Employee.Employee;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MainClass {
+public class HR {
 
     public static Scanner input = new Scanner(System.in);
     public static ArrayList<Employee> allEmployees = new ArrayList<>();
@@ -22,9 +24,9 @@ public class MainClass {
             Employee emp = Employee.searchEmp_By_ID(id);
             System.out.println("****************************************************************");
             System.out.println(
-                     "1-View Detailed\n2-Take Vacation\n"
+                    "1-View Detailed\n2-Take Vacation\n"
                     + "3-Take Permission Hours\n4-Calculate Salary for this Employee\n"
-                             + "5-(*(((((*((((((()))))) For this Employee"
+                    + "5-(*(((((*((((((()))))) For this Employee"
                     + "6-Free All constants\n7-Separation\n"
                     + "if HR want to close the console Enter ZERO");
             option = input.nextInt();
@@ -49,8 +51,7 @@ public class MainClass {
                     System.out.println(emp.calculateActualSalary());
                     break;
                 }
-                case 5:
-                {
+                case 5: {
                     break;
                 }
                 case 6: {
@@ -65,29 +66,31 @@ public class MainClass {
             }
         } while (option != 0);
     }
-    
+
     public static void main(String[] args) {
         operationsForHR();
 
     }
 
-    static void enterAllDummies(){
+    static void enterAllDummies() {
         dummyEmployees();
         dummyDepartments();
         dummyProjects();
     }
-   
+
     static void dummyEmployees() {
         for (int i = 0; i < 10; i++) {
             allEmployees.add(new Developer("Allam Dev " + i, "DEV " + i, 'm', "Android " + i));
             allEmployees.add(new Accountant("Allam Acc " + i, "ACC " + i, 'm'));
         }
     }
+
     static void dummyDepartments() {
         for (int i = 0; i < 3; i++) {
             allDepartments.add(new Department("Department Number " + i, allEmployees.get(0), 30000));
         }
     }
+
     static void dummyProjects() {
         for (int i = 0; i < 4; i++) {
             allProjects.add(new Project("Project Number " + i, "Address" + i));

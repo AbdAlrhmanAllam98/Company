@@ -1,11 +1,13 @@
 package Employee;
 
 //abstract ya3ni mynf3sh a3ml mno OBJECT 
-import Company.Task;
-import static Company.MainClass.allEmployees;
+import Project.Task;
+import static Company.HR.allEmployees;
 
-import static Company.MainClass.input;
-import Company.Project;
+import static Company.HR.input;
+import Project.Project;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Employee {
@@ -128,6 +130,15 @@ public abstract class Employee {
 
         }
         allEmployees.add(emp);
+        try {
+            FileWriter myWriter = new FileWriter("Employees.txt");
+            myWriter.write(emp.getName()+" "+emp.getNationalId()+" "+emp.getGender());
+            myWriter.close();
+            
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());   
+        }
     }
 
     public static Employee searchEmp_By_ID(String id) {

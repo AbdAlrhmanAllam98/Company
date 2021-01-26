@@ -1,4 +1,4 @@
-package Company;
+package Project;
 
 public class Task {
     

@@ -1,7 +1,8 @@
-package Company;
+package Project;
+import Department.Department;
 import Employee.Employee;
-import static Company.MainClass.allProjects;
-import static Company.MainClass.input;
+import static Company.HR.allProjects;
+import static Company.HR.input;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
