@@ -1,0 +1,81 @@
+package Company;
+
+import java.util.ArrayList;
+
+public class Department {
+
+    String departmentName;
+    Employee departmentManager;
+    int numberId;
+    static int idGeneretor = 0;
+    long startDate;
+    private ArrayList<Project> projects; 
+    
+    public Department() {
+        departmentName = "";
+        numberId=idGeneretor++;
+        startDate = 0;
+        projects= new ArrayList<>();
+    }
+    
+    public Department(String department_name, Employee departmentManager, long startDate) {
+        this.departmentName = department_name;
+        this.departmentManager = departmentManager;
+        this.startDate = startDate;
+        numberId=idGeneretor++;
+        projects= new ArrayList<>();
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public Employee getDepartmentManager() {
+        return departmentManager;
+    }
+
+    public void setDepartmentManager(Employee departmentManager) {
+        this.departmentManager = departmentManager;
+    }
+
+    public long getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(long startDate) {
+        this.startDate = startDate;
+    }
+
+    public int getNumberId() {
+        return numberId;
+    }
+    
+    public ArrayList<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(ArrayList<Project> projects) {
+        this.projects = projects;
+    }
+    void addProjectToDept(Project p)
+    {
+        projects.add(p);
+    }
+
+    void viewDepartment()
+    {
+        System.out.println("Department name : "+departmentName);
+        System.out.println("Department manager : "+departmentManager);
+        System.out.println("Department ID : "+numberId);
+        System.out.println("Employee become manager in the department at : "+startDate);
+        for(int i=0;i<projects.size();i++)
+        {
+            System.out.println("Project Name :"+projects.get(i).getName());
+            System.out.println("Project Location :"+projects.get(i).getLocation());
+        }
+    }    
+}
