@@ -1,13 +1,11 @@
 package Employee;
 
 //abstract ya3ni mynf3sh a3ml mno OBJECT 
-import Project.Task;
 import static Company.HR.allEmployees;
-
+import Project.Task;
 import static Company.HR.input;
 import Project.Project;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public abstract class Employee {
@@ -21,7 +19,6 @@ public abstract class Employee {
     protected static double deductionPerDay = 85.5;
     protected static double deductionPerHour = 15.5;
     protected double actualSalary;
-
     protected static ArrayList<Project> worksOn;
 
     public Employee() {
@@ -68,6 +65,30 @@ public abstract class Employee {
         this.nationalId = nationalId;
     }
 
+    public int getAvailableVacations() {
+        return availableVacations;
+    }
+
+    public void setAvailableVacations(int availableVacations) {
+        this.availableVacations = availableVacations;
+    }
+
+    public int getAvailablePermissionHours() {
+        return availablePermissionHours;
+    }
+
+    public void setAvailablePermissionHours(int availablePermissionHours) {
+        this.availablePermissionHours = availablePermissionHours;
+    }
+
+    public double getActualSalary() {
+        return actualSalary;
+    }
+
+    public void setActualSalary(double actualSalary) {
+        this.actualSalary = actualSalary;
+    }
+
     public ArrayList<Project> getWorksOn() {
         return worksOn;
     }
@@ -109,7 +130,7 @@ public abstract class Employee {
         }
     }
 
-    private static void addEmployee() {
+    public static void addEmployee() {
         System.out.println("Enter employee name : ");
         String name = input.nextLine();
         System.out.println("Enter employee ID : ");
@@ -130,15 +151,52 @@ public abstract class Employee {
 
         }
         allEmployees.add(emp);
+        addEmployeeDB(emp);
+    }
+
+    private static void addEmployeeDB(Employee emp) {
         try {
-            FileWriter myWriter = new FileWriter("Employees.txt");
-            myWriter.write(emp.getName()+" "+emp.getNationalId()+" "+emp.getGender());
-            myWriter.close();
-            
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());   
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/company", "root", "");
+            Statement stmt = conn.createStatement();
+            String query = null;
+            if (emp instanceof Developer) {
+                query = "INSERT INTO `employee`(`id`, `name`, `nationalId`, `status`, `gender`, `actualSalary`, `availableVacations`, `availablePermissionHours`, `certifiedExcel`, `frameWork`) VALUES "
+                        + "(null,'" + emp.getName() + "'," + emp.getNationalId() + ",'Developer','" + emp.getGender() + "'," + emp.getActualSalary() + "," + emp.getAvailableVacations() + "," + emp.getAvailablePermissionHours() + ",null,'" + ((Developer) emp).frameWork + "')";
+            } else if (emp instanceof Accountant) {
+                query = "INSERT INTO `employee`(`id`, `name`, `nationalId`, `status`, `gender`, `actualSalary`, `availableVacations`, `availablePermissionHours`, `certifiedExcel`, `frameWork`) VALUES "
+                        + "(null,'" + emp.getName() + "'," + emp.getNationalId() + ",'Accountant','" + emp.getGender() + "'," + emp.getActualSalary() + "," + emp.getAvailableVacations() + "," + emp.getAvailablePermissionHours() + "," + ((Accountant) emp).certifiedExcel + ",null)";
+            }
+            stmt.executeUpdate(query);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+    }
+
+    public static ArrayList<Employee> retrieveEmployees() {
+        allEmployees = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/company", "root", "");
+            Statement stmt = conn.createStatement();
+            String query = "SELECT * From employee";
+            ResultSet res = stmt.executeQuery(query);
+            Employee emp = null;
+            while (res.next()) {
+                if ("Developer".equals(res.getString("status"))) {
+                    emp = new Developer(res.getString("name"), res.getLong("nationalId") + "", res.getString("gender").charAt(0), res.getString("frameWork"));
+                } else if ("Accountant".equals(res.getString("status"))) {
+                    emp = new Accountant(res.getString("name"), res.getLong("nationalId") + "", res.getString("gender").charAt(0));
+                }
+                emp.setActualSalary(res.getDouble("actualSalary"));
+                emp.setAvailableVacations(res.getInt("availableVacations"));
+                emp.setAvailablePermissionHours(res.getInt("availablePermissionHours"));
+
+                allEmployees.add(emp);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return allEmployees;
     }
 
     public static Employee searchEmp_By_ID(String id) {

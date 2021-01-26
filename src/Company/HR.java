@@ -1,22 +1,17 @@
 package Company;
-
 import Project.Project;
 import Department.Department;
-import Employee.Accountant;
-import Employee.Developer;
 import Employee.Employee;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HR {
-
     public static Scanner input = new Scanner(System.in);
-    public static ArrayList<Employee> allEmployees = new ArrayList<>();
     public static ArrayList<Project> allProjects = new ArrayList<>();
+    public static ArrayList<Employee> allEmployees = new ArrayList<>();
     public static ArrayList<Department> allDepartments = new ArrayList<>();
 
     static void operationsForHR() {
-
         int option, temp;
         do {
             System.out.println("All of this is to Employee\nEnter National id for employee :");
@@ -68,33 +63,33 @@ public class HR {
     }
 
     public static void main(String[] args) {
-        operationsForHR();
 
     }
-
-    static void enterAllDummies() {
-        dummyEmployees();
-        dummyDepartments();
-        dummyProjects();
-    }
-
-    static void dummyEmployees() {
-        for (int i = 0; i < 10; i++) {
-            allEmployees.add(new Developer("Allam Dev " + i, "DEV " + i, 'm', "Android " + i));
-            allEmployees.add(new Accountant("Allam Acc " + i, "ACC " + i, 'm'));
-        }
-    }
-
-    static void dummyDepartments() {
-        for (int i = 0; i < 3; i++) {
-            allDepartments.add(new Department("Department Number " + i, allEmployees.get(0), 30000));
-        }
-    }
-
-    static void dummyProjects() {
-        for (int i = 0; i < 4; i++) {
-            allProjects.add(new Project("Project Number " + i, "Address" + i));
-        }
-    }
+//
+//    static void enterAllDummies() {
+//        dummyEmployees();
+//        dummyDepartments();
+//        dummyProjects();
+//
+//    }
+//
+//    static void dummyEmployees() {
+//        for (int i = 0; i < 10; i++) {
+//            allEmployees.add(new Developer("Allam Dev " + i, "DEV " + i, 'm', "Android " + i));
+//            allEmployees.add(new Accountant("Allam Acc " + i, "ACC " + i, 'm'));
+//        }
+//    }
+//
+//    static void dummyDepartments() {
+//        for (int i = 0; i < 3; i++) {
+//            allDepartments.add(new Department("Department Number " + i, allEmployees.get(0), 30000));
+//        }
+//    }
+//
+//    static void dummyProjects() {
+//        for (int i = 0; i < 4; i++) {
+//            allProjects.add(new Project("Project Number " + i, "Address" + i));
+//        }
+//    }
 
 }
